@@ -11,20 +11,8 @@ import userRoutes from "./routes/users.js";
 import adminRoutes from "./routes/admin.js";
 const app = express();
 const PORT = process.env.PORT || 5e3;
-const allowedOrigins = [
-  "https://al-shifa-clinic-frontend.vercel.app",
-  "http://localhost:3000",
-  "http://localhost:3001"
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: true,
   credentials: true
 }));
 app.use(express.json());

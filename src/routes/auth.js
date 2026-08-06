@@ -4,15 +4,21 @@ import nodemailer from "nodemailer";
 import User from "../models/User.js";
 import { requireAdmin } from "../middleware/auth.js";
 const router = Router();
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});
+
 router.post("/send-otp", async (req, res) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
     let { username, password } = req.body;
     if (username) username = username.trim();
     if (password) password = password.trim();
@@ -119,13 +125,7 @@ router.post("/login", async (req, res) => {
 });
 router.post("/forgot-password-otp", async (req, res) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+
     const { username } = req.body;
     if (!username) {
       return res.status(400).json({ error: "Missing email/username" });
@@ -231,13 +231,7 @@ router.post("/add-doctor", requireAdmin, async (req, res) => {
       role: "doctor"
     });
     await user.save();
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+
     const mailOptions = {
       from: {
         name: "Al-Shifa Clinic",
