@@ -75,7 +75,7 @@ router.post("/send-otp", async (req, res) => {
         </div>
       `
     };
-    await transporter.sendMail(mailOptions);
+    transporter.sendMail(mailOptions).catch(err => console.error("Auth send-otp email error:", err));
     return res.json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
     console.error("Auth send-otp error:", error);
@@ -176,7 +176,7 @@ router.post("/forgot-password-otp", async (req, res) => {
         </div>
       `
     };
-    await transporter.sendMail(mailOptions);
+    transporter.sendMail(mailOptions).catch(err => console.error("Auth forgot-password email error:", err));
     return res.json({ success: true, message: "If the email is registered, an OTP has been sent." });
   } catch (error) {
     console.error("Auth forgot-password error:", error);
@@ -250,7 +250,7 @@ router.post("/add-doctor", requireAdmin, async (req, res) => {
         </div>
       `
     };
-    await transporter.sendMail(mailOptions);
+    transporter.sendMail(mailOptions).catch(err => console.error("Auth add-doctor email error:", err));
     return res.json({ success: true, message: "Doctor added successfully and email sent." });
   } catch (error) {
     console.error("Auth add-doctor error:", error);
