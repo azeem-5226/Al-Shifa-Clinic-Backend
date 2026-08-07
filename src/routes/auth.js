@@ -79,7 +79,6 @@ router.post("/send-otp", async (req, res) => {
         </div>
       `
     };
-    };
     
     try {
       console.log(`[SMTP Verify] Verifying connection for /send-otp...`);
@@ -194,7 +193,6 @@ router.post("/forgot-password-otp", async (req, res) => {
         </div>
       `
     };
-    };
     
     try {
       console.log(`[SMTP Verify] Verifying connection for /forgot-password-otp...`);
@@ -281,7 +279,6 @@ router.post("/add-doctor", requireAdmin, async (req, res) => {
           <p>Please log in using this password. You can change your password later using the forgot password flow.</p>
         </div>
       `
-    };
     };
     
     try {
