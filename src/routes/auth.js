@@ -81,18 +81,14 @@ router.post("/send-otp", async (req, res) => {
     };
     
     try {
-      console.log(`[SMTP Verify] Verifying connection for /send-otp...`);
-      const verifyResult = await transporter.verify();
-      console.log(`[SMTP Verify] Success:`, verifyResult);
-      
       console.log(`[SMTP Send] Attempting to send email to: ${user.username}`);
       const info = await transporter.sendMail(mailOptions);
       console.log(`[SMTP Send] Success:`, info.messageId);
       
       return res.json({ success: true, message: "OTP sent successfully" });
     } catch (smtpError) {
-      console.error(`[SMTP Error] Full error details in /send-otp:`, smtpError);
-      return res.status(500).json({ error: "Email sending failed: " + smtpError.message, details: smtpError });
+      console.error(`[SMTP Error] in /send-otp:`, smtpError.message);
+      return res.status(500).json({ error: "Email sending failed. Please try again later." });
     }
   } catch (error) {
     console.error("Auth send-otp error:", error);
@@ -195,18 +191,14 @@ router.post("/forgot-password-otp", async (req, res) => {
     };
     
     try {
-      console.log(`[SMTP Verify] Verifying connection for /forgot-password-otp...`);
-      const verifyResult = await transporter.verify();
-      console.log(`[SMTP Verify] Success:`, verifyResult);
-      
       console.log(`[SMTP Send] Attempting to send email to: ${user.username}`);
       const info = await transporter.sendMail(mailOptions);
       console.log(`[SMTP Send] Success:`, info.messageId);
       
       return res.json({ success: true, message: "If the email is registered, an OTP has been sent." });
     } catch (smtpError) {
-      console.error(`[SMTP Error] Full error details in /forgot-password-otp:`, smtpError);
-      return res.status(500).json({ error: "Email sending failed: " + smtpError.message, details: smtpError });
+      console.error(`[SMTP Error] in /forgot-password-otp:`, smtpError.message);
+      return res.status(500).json({ error: "Email sending failed. Please try again later." });
     }
   } catch (error) {
     console.error("Auth forgot-password error:", error);
@@ -282,18 +274,14 @@ router.post("/add-doctor", requireAdmin, async (req, res) => {
     };
     
     try {
-      console.log(`[SMTP Verify] Verifying connection for /add-doctor...`);
-      const verifyResult = await transporter.verify();
-      console.log(`[SMTP Verify] Success:`, verifyResult);
-      
       console.log(`[SMTP Send] Attempting to send email to: ${username}`);
       const info = await transporter.sendMail(mailOptions);
       console.log(`[SMTP Send] Success:`, info.messageId);
       
       return res.json({ success: true, message: "Doctor added successfully and email sent." });
     } catch (smtpError) {
-      console.error(`[SMTP Error] Full error details in /add-doctor:`, smtpError);
-      return res.status(500).json({ error: "Email sending failed: " + smtpError.message, details: smtpError });
+      console.error(`[SMTP Error] in /add-doctor:`, smtpError.message);
+      return res.status(500).json({ error: "Email sending failed. Please try again later." });
     }
   } catch (error) {
     console.error("Auth add-doctor error:", error);
